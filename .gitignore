@@ -1,0 +1,25 @@
+# Intellij
+.idea/
+*.iml
+out
+gen
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+logs/
+target/classes
+target/generated-test-sources
+target/maven-archiver
+target/generated-sources
+target/maven-status
+target/promotion-service-1.0.0-SNAPSHOT.jar.original
+
+# Eclipse
+build/
+.settings/
+.classpath
+.project
+.metadata
