@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!-- target:spring管理的bean实例 -->
+	<!-- 有接口的bean -->
+	<bean id="customerService" class="com.test.aop.aspectj.CustomerServiceImpl"/>
+	<!-- 无接口的bean -->
+	<bean id="productService" class="com.test.aop.aspectj.ProductServiceImpl"/>
+	<!-- 通知类 -->
+	<bean id="myAspectjAdvice" class="com.test.aop.aspectj.MyAspectjAdvice"/>
+	
+	
+	<!-- 传统形式使用aop:advisor -->
+	<!-- <aop:config>
+		<aop:pointcut expression="within(com.test.aop.traditional..*)" id="myPointCut"/>
+		<aop:advisor advice-ref="timeLogAdvice" pointcut-ref="myPointCut"/>
+	</aop:config> -->
+	<!-- aspectJ形式示例 -->
+	<!-- <aop:config>
+		方式1
+		<aop:aspect ref="myAspectjAdvice">
+			<aop:before method="firstBefore" pointcut="within(com.test.aop.aspectj..*)"/>
+		</aop:aspect>
+		
+		方式2
+		<aop:pointcut expression="within(com.test.aop.aspectj..*)" id="myPointCut"/>
+		<aop:aspect ref="myAspectjAdvice">
+			<aop:before method="secondBefore" pointcut-ref="myPointCut"/>
+			<aop:before method="firstBefore" pointcut-ref="myPointCut"/>
+		</aop:aspect>
+	</aop:config> -->
+	
+	
+	<!-- aspectJ的各种通知类型 -->
+	<!-- before通知 -->
+	<!-- <aop:config>
+		<aop:pointcut expression="execution(* com.test.aop.aspectj.*.*(..))" id="myPointCut"/>
+		<aop:aspect ref="myAspectjAdvice">
+			<aop:before method="before" pointcut-ref="myPointCut"/>
+			<aop:before method="before" pointcut="execution(* com.test.aop.aspectj.*.*(..))"/>
+		</aop:aspect>
+	</aop:config> -->
+	
+	<!-- afterReturing通知 -->
+	<!-- <aop:config>
+		<aop:pointcut expression="execution(* com.test.aop.aspectj.*.*(..))" id="myPointCut"/>
+		<aop:aspect ref="myAspectjAdvice">
+			returning指定目标对象方法（jointpoint）返回值的接收参数，spring会自动将jointpoint的返回值，传入该afterReturing方法的该参数中
+			<aop:after-returning method="afterReturing" returning="returnVal" pointcut-ref="myPointCut"/>
+		</aop:aspect>
+	</aop:config> -->
+	
+	<!-- around通知 -->
+	<!-- <aop:config>
+		<aop:aspect ref="myAspectjAdvice">
+			<aop:around method="around" pointcut="execution(* com.test.aop.aspectj.*.find(..))"/>
+		</aop:aspect>
+	</aop:config> -->
+	
+	<!-- afterThrowing通知 -->
+	<!-- <aop:config>
+		<aop:pointcut expression="execution(* com.test.aop.aspectj.*.*(..))" id="myPointCut"/>
+		<aop:aspect ref="myAspectjAdvice">
+			throwing指定目标对象方法（jointpoint）抛出异常的接收参数，spring会自动将该值传入该afterThrowing方法的ex参数中
+			<aop:after-throwing method="afterThrowing" pointcut-ref="myPointCut" throwing="ex"/>
+		</aop:aspect>
+	</aop:config> -->
+	
+	<!-- after通知 -->
+	<aop:config>
+		<aop:aspect ref="myAspectjAdvice">
+			<aop:after method="after" pointcut="execution(* com.test.aop.aspectj.*.*(..))"/>
+		</aop:aspect>
+	</aop:config>
+</beans>

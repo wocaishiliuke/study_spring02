@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+		
+	<!-- 开启注解功能 -->
+	<!-- <context:annotation-config/> -->
+	<!-- 包扫描 -->
+	<context:component-scan base-package="com.test.aop.aspectj.anno"/>
+	
+    <!-- 1.确定目标:spring中的bean -->
+	<!-- 2.编写通知 -->
+	<!-- 
+		配置aspectj自动代理：自动扫描bean组件，将含有@Aspect的bean，作为aop管理，相当于:<aop:config> \
+		proxy-target-class:默认是false，表示使用jdk接口代理；true表示对类代理，即使有接口，也使用cglib代理
+	-->
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+</beans>

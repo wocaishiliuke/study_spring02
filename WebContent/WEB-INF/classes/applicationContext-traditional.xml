@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!-- target:spring管理的bean实例 -->
+	<!-- 有接口的bean -->
+	<bean id="customerService" class="com.test.aop.traditional.CustomerServiceImpl"/>
+	<!-- 无接口的bean -->
+	<bean id="productService" class="com.test.aop.traditional.ProductServiceImpl"/>
+	
+	<!-- 通知类 -->
+	<bean id="timeLogAdvice" class="com.test.aop.traditional.TimeLogAdvice"/>
+	
+	<!-- <aop:config proxy-target-class="true"> -->
+	<aop:config>
+		<!-- 方式1:配置切面时，同时定义切入点 -->
+		<!-- <aop:advisor advice-ref="timeLogAdvice" pointcut="bean(*Service*)"/> -->
+		
+		<!-- 方式2:切入点和切面分开配置，更灵活 -->
+		<!-- 配置Pointcut切入点：即要拦截的jointpoint（方法）,这里使用aspectj表达式语法,相对简单 -->
+		<!-- <aop:pointcut expression="bean(*ServiceImpl)" id="myPointCut"/> -->
+		<!-- <aop:pointcut expression="bean(customerService)" id="myPointCut"/> -->
+		<!-- <aop:pointcut expression="bean(productService)" id="myPointCut"/> -->
+		<!-- <aop:pointcut expression="target(com.test.aop.traditional.ProductServiceImpl)" id="myPointCut"/> -->
+		<!-- <aop:pointcut expression="execution(* com.test.aop.traditional.*ServiceImpl.*(..))" id="myPointCut"/> -->
+		<!-- <aop:pointcut expression="execution(* com.test.aop.traditional.CustomerService.*(..))" id="myPointCut"/> -->
+		<!-- <aop:pointcut expression="execution(* com.test.aop.traditional.CustomerServiceImpl.*(..))" id="myPointCut"/> -->
+		<!-- <aop:pointcut expression="execution(* com.test.aop.traditional.CustomerServiceImpl.find(..))" id="myPointCut"/> -->
+		<!-- <aop:pointcut expression="execution(int com.test.aop.traditional.CustomerServiceImpl.*(..))" id="myPointCut"/> -->
+		<!-- <aop:pointcut expression="execution(void com.test.aop.traditional.CustomerServiceImpl.*(..))" id="myPointCut"/> -->
+		<aop:pointcut expression="within(com.test.aop.traditional..*)" id="myPointCut"/>
+		<!-- 配置切面：对指定的pointcut，进行指定的Advice增强  -->
+		<aop:advisor advice-ref="timeLogAdvice" pointcut-ref="myPointCut"/>
+	</aop:config>
+</beans>
